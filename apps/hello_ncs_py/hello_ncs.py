@@ -11,10 +11,14 @@ import mvnc.mvncapi as fx
 if __name__=="__main__":
 
      # set the logging level for the NC API
-    fx.SetGlobalOption(fx.GlobalOption.LOG_LEVEL, 0)
+    # fx.SetGlobalOption(fx.GlobalOption.LOG_LEVEL, 0) # [aboutyou1219] NCSDK v1
+    fx.global_set_option(fx.GlobalOption.RW_LOG_LEVEL, fx.LogLevel.DEBUG)
+
 
     # get a list of names for all the devices plugged into the system
-    ncs_names = fx.EnumerateDevices()
+    # ncs_names = fx.EnumerateDevices() # [aboutyou1219] NCSDK v1
+    ncs_names = fx.enumerate_devices()
+
     if (len(ncs_names) < 1):
         print("Error - no NCS devices detected, verify an NCS device is connected.")
         quit() 
@@ -26,7 +30,8 @@ if __name__=="__main__":
     
     # try to open the device.  this will throw an exception if someone else has it open already
     try:
-        dev.OpenDevice()
+        # dev.OpenDevice() # [aboutyou1219] NCSDK v1
+        dev.open()
     except:
         print("Error - Could not open NCS device.")
         quit()
@@ -36,7 +41,8 @@ if __name__=="__main__":
     
 
     try:
-        dev.CloseDevice()
+        # dev.CloseDevice() # [aboutyou1219] NCSDK v1
+        dev.close()
     except:
         print("Error - could not close NCS device.")
         quit()
